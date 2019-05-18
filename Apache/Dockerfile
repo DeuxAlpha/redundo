@@ -22,4 +22,4 @@ COPY ./conf/sites-available ./sites-available
 COPY ./conf/sites-enabled ./sites-enabled
 COPY ./conf/mods-enabled ./mods-enabled
 
-ENTRYPOINT["bash", "/etc/apache2/init_apache.sh"]
+ENTRYPOINT[ "bash", "/etc/apache2/init_apache.sh" ]
