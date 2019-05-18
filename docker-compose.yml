@@ -1,5 +1,69 @@
 version: '3.7'
 
 services:
+  web:
+    image: redundo-apache
+    build: ./Apache
+    restart: on-failure
+    container_name: redundo-apache-app
+    ports:
+      - ${APACHE_PORT}:80
+      - ${APACHE_PORT_SSL}:443
+    environment:
+      DOMAINS: ${SSL_REQUIRED_DOMAINS}
+      WEBMASTER_MAIL: ${OWNER_EMAIL}
+      TIMEZONE: ${TIMEZONE}
+    volumes:
+      - redundo-certs:/etc/letsencrypt
+      - redundo-cron:/etc/cron.d
+      - redundo-logs:/var/log/apache2
+
+  db:
+    image: redundo-postgres
+    build: ./Postgres
+    restart: always
+    container_name: redundo-postgres-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      TIMEZONE: ${TIMEZONE}
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - redundo-data:/var/lib/postgresql/data
+
+  nuxt:
+    image: redundo-nuxt
+    build:
+      context: ./Frontend
+      args:
+        API_BROWSER_URL: ${CLIENT_API}
+    restart: on-failure
+    container_name: redundo-nuxt-app
+    ports:
+      - 3000:3000
+    environment:
+      API_URL: http://redundo-dotnet-app:5000/api/
+      TIMEZONE: ${TIMEZONE}
+
   api:
-    command: 
+    image: redundo-dotnet
+    build: ./Backend
+    environment:
+      PostgresConnectionString: UserId=${POSTGRES_USER}; Password=${POSTGRES_PASSWORD}; Host=redundo-postgres-db; Database=${POSTGRES_DB};
+      SecurityKey: ${SECURITY_KEY}
+      ASPNETCORE_URLS: http://0.0.0.0:5000
+      TIMEZONE: ${TIMEZONE}
+    restart: on-failure
+    container_name: redundo-dotnet-app
+    ports:
+      - 5000:5000
+    depends_on:
+      - db
+
+volumes:
+  redundo-data:
+  redundo-certs:
+  redundo-cron:
+  redundo-logs:
