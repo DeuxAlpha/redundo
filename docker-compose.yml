@@ -12,7 +12,6 @@ services:
     environment:
       DOMAINS: ${SSL_REQUIRED_DOMAINS}
       WEBMASTER_MAIL: ${OWNER_EMAIL}
-      TIMEZONE: ${TIMEZONE}
     volumes:
       - redundo-certs:/etc/letsencrypt
       - redundo-cron:/etc/cron.d
@@ -27,7 +26,6 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
-      TIMEZONE: ${TIMEZONE}
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
@@ -45,7 +43,6 @@ services:
       - 3000:3000
     environment:
       API_URL: http://redundo-dotnet-app:5000/api/
-      TIMEZONE: ${TIMEZONE}
 
   api:
     image: redundo-dotnet
@@ -54,7 +51,6 @@ services:
       PostgresConnectionString: UserId=${POSTGRES_USER}; Password=${POSTGRES_PASSWORD}; Host=redundo-postgres-db; Database=${POSTGRES_DB};
       SecurityKey: ${SECURITY_KEY}
       ASPNETCORE_URLS: http://0.0.0.0:5000
-      TIMEZONE: ${TIMEZONE}
     restart: on-failure
     container_name: redundo-dotnet-app
     ports:
