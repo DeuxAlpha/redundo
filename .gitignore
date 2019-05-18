@@ -1,0 +1,12 @@
+#Exclude
+.idea
+Frontend/*
+Backend/*
+Apache/*
+#Machine-specific setup
+.env
+
+#Include
+!Frontend/Dockerfile
+!Backend/Dockerfile
+!Apache/Dockerfile
