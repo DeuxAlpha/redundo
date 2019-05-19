@@ -50,6 +50,8 @@ services:
     environment:
       ConnectionString: UserId=${POSTGRES_USER}; Password=${POSTGRES_PASSWORD}; Host=redundo-postgres-db; Database=${POSTGRES_DB};
       SecurityKey: ${SECURITY_KEY}
+      Audience: ${AUDIENCE}
+      Issuer: ${ISSUER}
       ASPNETCORE_URLS: http://0.0.0.0:5000
     restart: on-failure
     container_name: redundo-dotnet-app
