@@ -48,7 +48,7 @@ services:
     image: redundo-dotnet
     build: ./Backend
     environment:
-      PostgresConnectionString: UserId=${POSTGRES_USER}; Password=${POSTGRES_PASSWORD}; Host=redundo-postgres-db; Database=${POSTGRES_DB};
+      ConnectionString: UserId=${POSTGRES_USER}; Password=${POSTGRES_PASSWORD}; Host=redundo-postgres-db; Database=${POSTGRES_DB};
       SecurityKey: ${SECURITY_KEY}
       ASPNETCORE_URLS: http://0.0.0.0:5000
     restart: on-failure
