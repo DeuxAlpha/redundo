@@ -14,7 +14,7 @@ services:
       WEBMASTER_MAIL: ${OWNER_EMAIL}
     volumes:
       - redundo-certs:/etc/letsencrypt
-      - redundo-cron:/etc/cron.d/certbot
+      - redundo-cron:/etc/cron.d
       - redundo-logs:/var/log/apache2
 
   db:
