@@ -1,0 +1,17 @@
+# Coverage directory used by tools like istanbul
+coverage
+
+# Dependency directories
+node_modules/
+
+# dotenv environment variables file
+.env
+
+# nuxt.js build output
+.nuxt
+
+# IDE
+.idea
+
+# Service worker
+sw.*

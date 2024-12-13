@@ -1,0 +1,19 @@
+# For Guide only. Copy to root folder with .gitignore to use.
+version: '3.7'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    container_name: inline-postgresql
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DB: inlinedb
+    ports:
+      - 10100:5432
+    volumes:
+      - inline-data:/var/lib/postgresql/data
+      
+volumes:
+  inline-data:
